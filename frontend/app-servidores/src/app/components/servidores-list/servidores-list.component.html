@@ -3,9 +3,9 @@
 
   <!-- Filtro de busca -->
   <div class="search-filters">
-    <input [(ngModel)]="nome" placeholder="Buscar por nome" />
-    <input [(ngModel)]="orgao" placeholder="Buscar por órgão" />
-    <input [(ngModel)]="lotacao" placeholder="Buscar por lotação" />
+    <input [(ngModel)]="nome" (ngModelChange)="buscar()"  placeholder="Buscar por nome" />
+    <input [(ngModel)]="orgao" (ngModelChange)="buscar()" placeholder="Buscar por órgão" />
+    <input [(ngModel)]="lotacao" (ngModelChange)="buscar()" placeholder="Buscar por lotação" />
     <button (click)="buscar()">Buscar</button>
   </div>
 
@@ -27,7 +27,7 @@
   </div>
 
   <!-- Modal de Cadastro/Atualização -->
-  <div class="modal" >
+  <div class="modal">
     <form (ngSubmit)="salvar()">
       <label for="nome">Nome</label>
       <input type="text" id="nome" [(ngModel)]="servidorForm.nome" name="nome" required />
@@ -39,10 +39,16 @@
       <input type="email" id="email" [(ngModel)]="servidorForm.email" name="email" />
 
       <label for="orgao">Órgão</label>
-      <input type="text" id="orgao" [(ngModel)]="servidorForm.orgao" name="orgao" required />
+      <select id="orgao" [(ngModel)]="servidorForm.orgao" name="orgao" (change)="onOrgaoChange()" required>
+        <option value="">Selecione o Órgão</option>
+        <option *ngFor="let orgao of orgaos" [value]="orgao">{{ orgao }}</option>
+      </select>
 
       <label for="lotacao">Lotação</label>
-      <input type="text" id="lotacao" [(ngModel)]="servidorForm.lotacao" name="lotacao" required />
+      <select id="lotacao" [(ngModel)]="servidorForm.lotacao" name="lotacao" required>
+        <option value="">Selecione a Lotação</option>
+        <option *ngFor="let lotacao of lotacoesFiltradas" [value]="lotacao">{{ lotacao }}</option>
+      </select>
 
       <label for="sala">Sala</label>
       <input type="text" id="sala" [(ngModel)]="servidorForm.sala" name="sala" />
@@ -50,5 +56,24 @@
       <button type="submit">Salvar</button>
       <button type="button" (click)="cancelar()">Cancelar</button>
     </form>
+  </div>
+  <br>
+  <br>
+  <br>
+  Inativos
+  <div class="servidores-list-container">
+    <div class="servidor-item" *ngFor="let servidor of servidoresInativos">
+      <div class="servidor-info">
+        <div class="servidor-name">{{ servidor.nome }}</div>
+        <div class="servidor-orgao">{{ servidor.orgao }}</div>
+        <div class="servidor-lotacao">{{ servidor.lotacao }}</div>
+        <div class="servidor-ativo">{{ servidor.ativo ? 'Ativo' : 'Inativo' }}</div>
+      </div>
+
+      <div class="servidor-actions">
+        <button mat-button (click)="reativar(servidor.id)">Reativar</button>
+        <button mat-button color="warn" (click)="excluir(servidor.id)">Excluir</button>
+      </div>
+    </div>
   </div>
 </div>

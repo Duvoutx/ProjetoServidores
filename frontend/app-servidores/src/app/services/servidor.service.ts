@@ -30,6 +30,16 @@ export class ServidorService {
     return this.http.get<Servidor[]>(url);
   }
 
+  // Método para buscar órgãos
+  getOrgaos(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/orgaos`);
+  }
+
+  // Método para buscar lotações por órgão
+  getLotacoesByOrgao(orgao: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/lotacoes/${orgao}`);
+  }
+
   // Cadastrar um servidor
   add(servidor: Servidor): Observable<Servidor> {
   const headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -45,4 +55,18 @@ update(servidor: Servidor): Observable<Servidor> {
   inativar(id: number): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/inativar/${id}`, null);
   }
+
+   getInativos(): Observable<Servidor[]> {
+  return this.http.get<Servidor[]>(`${this.apiUrl}/inativos`); // Corrigido o erro na URL
+}
+// Método para reativar o servidor
+reativar(id: number): Observable<Servidor> {
+  return this.http.put<Servidor>(`${this.apiUrl}/reativar/${id}`, null);
+}
+
+// Método para excluir o servidor permanentemente
+excluir(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/excluir/${id}`);
+}
+
 }

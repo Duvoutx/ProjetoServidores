@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using ServidoresAPI.Models;
+using ServidoresAPI.Data;
+using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 [ApiController]
 [Route("servidores")]
 public class ServidorController : ControllerBase
 {
     private readonly ServidorRepository _repository;
+
 
     public ServidorController(ServidorRepository repository)
     {
@@ -22,16 +26,42 @@ public class ServidorController : ControllerBase
 
     // 2. Cadastro de Servidores
     [HttpPost]
-    public async Task<IActionResult> Add(Servidor servidor)
+    public async Task<IActionResult> Add([FromBody] Servidor servidor)
     {
+        // Validação manual
         if (servidor == null)
         {
             return BadRequest("Servidor não pode ser nulo.");
         }
 
+        if (string.IsNullOrEmpty(servidor.Nome))
+        {
+            return BadRequest("Nome é obrigatório.");
+        }
+
+        if (string.IsNullOrEmpty(servidor.Orgao))
+        {
+            return BadRequest("Órgão é obrigatório.");
+        }
+
+        if (string.IsNullOrEmpty(servidor.Lotacao))
+        {
+            return BadRequest("Lotação é obrigatória.");
+        }
+        // Verifica se o email já está em uso
+        bool emailExiste = await _repository.ExisteEmailAsync(servidor.Email);
+
+        if (emailExiste)
+        {
+            // Retorna um erro para o frontend se o email já existir
+            return BadRequest(new { message = "Já existe um servidor com esse email." });
+        }
+
+        // Se a validação passar, adicione o servidor
         await _repository.Add(servidor);
-        return CreatedAtAction(nameof(GetAll), new { id = servidor.Id }, servidor);
+        return Ok();
     }
+
 
     // 3. Atualização de Servidores
     [HttpPut("{id}")]
@@ -60,6 +90,17 @@ public class ServidorController : ControllerBase
         return NoContent();  // Status 204 - Atualização bem-sucedida
     }
 
+    [HttpGet("inativos")]
+    public async Task<IActionResult> GetInativos()
+    {
+        var inativos = await _repository.GetServidoresInativosAsync();
+        if (!inativos.Any())
+        {
+            return Ok(new { message = "Nenhum servidor inativo encontrado." });
+        }
+        return Ok(inativos);
+    }
+
     // 4. Inativação de Servidor (Exclusão Lógica)
     [HttpPut("inativar/{id}")]
     public async Task<IActionResult> Inativar(int id)
@@ -75,11 +116,69 @@ public class ServidorController : ControllerBase
         return NoContent();  // Status 204 - Inativação bem-sucedida
     }
 
+    [HttpPut("reativar/{id}")]
+    public async Task<IActionResult> ReativarServidor(int id)
+    {
+        var servidor = await _repository.GetByIdAsync(id);
+        if (servidor == null)
+        {
+            return NotFound(new { message = "Servidor não encontrado." });
+        }
+
+        servidor.Ativo = true;
+        await _repository.UpdateAsync(servidor);
+        return Ok(servidor);
+    }
+
+    // Método para excluir definitivamente um servidor
+    [HttpDelete("excluir/{id}")]
+    public async Task<IActionResult> ExcluirServidor(int id)
+    {
+        var servidor = await _repository.GetByIdAsync(id);
+        if (servidor == null)
+        {
+            return NotFound(new { message = "Servidor não encontrado." });
+        }
+
+        await _repository.DeleteAsync(id); // Chama o método que remove do banco
+        return NoContent(); // Retorna NoContent após a remoção
+    }
+
     // 5. Busca de Servidores por nome, órgão ou lotação
     [HttpGet("buscar")]
-    public async Task<IActionResult> Search([FromQuery] string nome, [FromQuery] string orgao, [FromQuery] string lotacao)
+    public async Task<IActionResult> Search(string? nome, string? orgao, string? lotacao)
     {
         var servidores = await _repository.Search(nome, orgao, lotacao);
         return Ok(servidores);
+    }
+    // Método GET para buscar órgãos
+    [HttpGet("orgaos")]               
+    public IActionResult GetOrgaos()
+    {
+        // Lógica para retornar os órgãos
+        var orgaos = new List<string> { "Órgão 1", "Órgão 2" };
+        return Ok(orgaos);  // Retorna os órgãos
+    }
+
+    // Método GET para buscar lotações por órgão
+    [HttpGet("lotacoes/{orgao}")]  // Método GET específico para /servidores/lotacoes/{orgao}
+    public IActionResult GetLotacoesByOrgao(string orgao)
+    {
+        // Simulando as lotações baseadas no órgão
+        var lotacoes = orgao switch
+        {
+            "Órgão 1" => new List<string> { "Lotação 1", "Lotação 2" },
+            "Órgão 2" => new List<string> { "Lotação 3", "Lotação 4" },
+            _ => new List<string>()  // Caso o órgão não seja encontrado, retorna uma lista vazia
+        };
+
+        if (lotacoes.Any())
+        {
+            return Ok(lotacoes); // Retorna as lotações
+        }
+        else
+        {
+            return NotFound($"Nenhuma lotação encontrada para o órgão: {orgao}");
+        }
     }
 }

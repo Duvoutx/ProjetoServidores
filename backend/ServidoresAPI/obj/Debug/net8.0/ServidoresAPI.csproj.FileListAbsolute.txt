@@ -190,3 +190,4 @@ C:\Users\eduar\Projeto Servidores\backend\ServidoresAPI\obj\Debug\net8.0\refint\
 C:\Users\eduar\Projeto Servidores\backend\ServidoresAPI\obj\Debug\net8.0\ServidoresAPI.pdb
 C:\Users\eduar\Projeto Servidores\backend\ServidoresAPI\obj\Debug\net8.0\ServidoresAPI.genruntimeconfig.cache
 C:\Users\eduar\Projeto Servidores\backend\ServidoresAPI\obj\Debug\net8.0\ref\ServidoresAPI.dll
+C:\Users\eduar\Projeto Servidores\backend\ServidoresAPI\obj\Debug\net8.0\ServidoresAPI.sourcelink.json
