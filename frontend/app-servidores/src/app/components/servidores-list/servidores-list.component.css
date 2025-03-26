@@ -1,0 +1,39 @@
+.servidores-list {
+  padding: 20px;
+}
+
+.search-filters {
+  margin-bottom: 20px;
+}
+
+.search-filters input {
+  margin-right: 10px;
+}
+
+.servidores-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.servidor-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.servidor-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.servidor-actions {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  margin-left: 10px;
+}
