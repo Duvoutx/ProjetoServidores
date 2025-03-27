@@ -1,21 +1,20 @@
-// src/app/components/servidor-item/servidor-item.component.ts
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Servidor } from '../../models/servidor.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip'; // Importe o MatTooltipModule
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-servidor-item',
   standalone: true,
-  imports: [CommonModule, MatButtonModule,MatIconModule, MatChipsModule,MatTooltipModule] ,
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatChipsModule, MatTooltipModule],
   templateUrl: './servidor-item.component.html',
-  styleUrls: ['./servidor-item.component.css']
+  styleUrls: ['./servidor-item.component.css'],
 })
-export class ServidorItemComponent {
-@Input() servidor!: Servidor;
+export class ServidorItemComponent implements OnInit {
+  @Input() servidor!: Servidor;
   @Output() editar = new EventEmitter<Servidor>();
   @Output() inativar = new EventEmitter<number>();
   @Output() reativar = new EventEmitter<number>();

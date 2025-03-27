@@ -1,37 +1,49 @@
 <div class="modal" [ngClass]="{'modal-visible': modalVisible}">
   <form (ngSubmit)="onSubmit()">
-    <label for="nome">Nome</label>
-    <input type="text" id="nome" [(ngModel)]="servidorForm.nome" name="nome" required />
-    <div *ngIf="formErrors?.Nome" class="error-message">{{ formErrors.Nome }}</div>
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" [(ngModel)]="servidorForm.nome" name="nome" required />
+      <div *ngIf="formErrors?.Nome" class="error-message">{{ formErrors.Nome }}</div>
+    </div>
 
-    <label for="telefone">Telefone</label>
-    <input type="text" id="telefone" [(ngModel)]="servidorForm.telefone" name="telefone" />
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input type="text" id="telefone" [(ngModel)]="servidorForm.telefone" name="telefone" />
+    </div>
 
-    <label for="email">E-mail</label>
-    <input type="email" id="email" [(ngModel)]="servidorForm.email" name="email" />
-    <div *ngIf="formErrors?.message" class="error-message">{{ formErrors.message }}</div>
-    <div *ngIf="formErrors?.Email" class="error-message">{{ formErrors.Email }}</div>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" [(ngModel)]="servidorForm.email" name="email" />
+      <div *ngIf="formErrors?.Email" class="error-message">{{ formErrors.Email }}</div>
+    </div>
 
-    <label for="orgao">Órgão</label>
-    <select id="orgao" [(ngModel)]="servidorForm.orgao" name="orgao" (change)="onOrgaoChange()" required>
-      <option value="">Selecione o Órgão</option>
-      <option *ngFor="let orgao of orgaos" [value]="orgao">{{ orgao }}</option>
-    </select>
-    <div *ngIf="formErrors?.Orgao" class="error-message">{{ formErrors.Orgao }}</div>
+    <div class="form-group">
+      <label for="orgao">Órgão</label>
+      <select id="orgao" [(ngModel)]="servidorForm.orgao" name="orgao" (change)="onOrgaoChange()" required>
+        <option value="">Selecione o Órgão</option>
+        <option *ngFor="let orgao of orgaos" [value]="orgao">{{ orgao }}</option>
+      </select>
+      <div *ngIf="formErrors?.Orgao" class="error-message">{{ formErrors.Orgao }}</div>
+    </div>
 
-    <label for="lotacao">Lotação</label>
-    <select id="lotacao" [(ngModel)]="servidorForm.lotacao" name="lotacao" required>
-      <option value="">Selecione a Lotação</option>
-      <option *ngFor="let lotacao of lotacoesFiltradas" [value]="lotacao">{{ lotacao }}</option>
-    </select>
-    <div *ngIf="formErrors?.Lotacao" class="error-message">{{ formErrors.Lotacao }}</div>
+    <div class="form-group">
+      <label for="lotacao">Lotação</label>
+      <select id="lotacao" [(ngModel)]="servidorForm.lotacao" name="lotacao" required>
+        <option value="">Selecione a Lotação</option>
+        <option *ngFor="let lotacao of lotacoesFiltradas" [value]="lotacao">{{ lotacao }}</option>
+      </select>
+      <div *ngIf="formErrors?.Lotacao" class="error-message">{{ formErrors.Lotacao }}</div>
+    </div>
 
-    <label for="sala">Sala</label>
-    <input type="text" id="sala" [(ngModel)]="servidorForm.sala" name="sala" />
+    <div class="form-group">
+      <label for="sala">Sala</label>
+      <input type="text" id="sala" [(ngModel)]="servidorForm.sala" name="sala" />
+      <div *ngIf="formErrors?.general" class="error-message">{{ formErrors.general }}</div>
+    </div>
 
-    <div *ngIf="formErrors?.general" class="error-message">{{ formErrors.general }}</div>
-
-    <button type="submit">Salvar</button>
-    <button type="button" (click)="onCancelar()">Cancelar</button>
+    <div class="buttons">
+      <button type="submit">Salvar</button>
+      <button type="button" (click)="onCancelar()">Cancelar</button>
+    </div>
   </form>
 </div>

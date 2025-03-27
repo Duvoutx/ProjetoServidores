@@ -4,9 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 11px;
-  /* Redução de 15px para ~11px */
   margin-bottom: 8px;
-  /* Mantivemos */
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   background-color: #fff;
@@ -19,20 +17,19 @@
 
 .servidor-name {
   font-size: 0.83rem;
-  /* Redução de 1.1rem para ~0.83rem */
   font-weight: 600;
   margin-bottom: 4px;
-  /* Redução de 5px para 4px */
 }
 
 .servidor-orgao,
 .servidor-lotacao,
-.servidor-ativo {
+.servidor-ativo,
+.servidor-telefone,
+.servidor-email,
+.servidor-sala {
   color: #555;
   font-size: 0.68rem;
-  /* Redução de 0.9rem para ~0.68rem */
   margin-bottom: 2px;
-  /* Redução de 3px para 2px */
 }
 
 .servidor-ativo {
@@ -42,12 +39,10 @@
 .servidor-actions button {
   margin-left: 8px;
   padding: 6px 9px;
-  /* Redução de 8px 12px para 6px 9px */
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.68rem;
-  /* Redução de 0.9rem para ~0.68rem */
   transition: background-color 0.2s ease-in-out;
 }
 

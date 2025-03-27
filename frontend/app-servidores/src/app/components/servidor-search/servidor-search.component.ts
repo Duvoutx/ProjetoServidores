@@ -2,41 +2,32 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-servidor-search',
-  standalone: true,
-  imports: [FormsModule, CommonModule, MatInputModule, MatButtonModule, MatIconModule],
-  templateUrl: './servidor-search.component.html',
-  styleUrls: ['./servidor-search.component.css'],
+  selector: 'app-servidor-search',
+  standalone: true,
+  imports: [FormsModule, CommonModule, MatInputModule, MatFormFieldModule],
+  templateUrl: './servidor-search.component.html',
+  styleUrls: ['./servidor-search.component.css'],
 })
 export class ServidorSearchComponent {
-  @Input() nome: string = '';
-  @Input() orgao: string = '';
-  @Input() lotacao: string = '';
-  @Output() buscar = new EventEmitter<void>();
-  @Output() nomeChange = new EventEmitter<string>();
-  @Output() orgaoChange = new EventEmitter<string>();
-  @Output() lotacaoChange = new EventEmitter<string>();
+  @Input() nome: string = '';
+  @Input() orgao: string = '';
+  @Input() lotacao: string = '';
+  @Output() nomeChange = new EventEmitter<string>();
+  @Output() orgaoChange = new EventEmitter<string>();
+  @Output() lotacaoChange = new EventEmitter<string>();
 
-  onNomeChange(newValue: string) { // Altere o tipo do parâmetro para string
-    this.nome = newValue;
-    this.nomeChange.emit(this.nome);
-  }
+  onNomeChange(newValue: string) {
+    this.nomeChange.emit(newValue);
+  }
 
-  onOrgaoChange(newValue: string) { // Altere o tipo do parâmetro para string
-    this.orgao = newValue;
-    this.orgaoChange.emit(this.orgao);
-  }
+  onOrgaoChange(newValue: string) {
+    this.orgaoChange.emit(newValue);
+  }
 
-  onLotacaoChange(newValue: string) { // Altere o tipo do parâmetro para string
-    this.lotacao = newValue;
-    this.lotacaoChange.emit(this.lotacao);
-  }
-
-  onBuscarClick() {
-    this.buscar.emit();
-  }
+  onLotacaoChange(newValue: string) {
+    this.lotacaoChange.emit(newValue);
+  }
 }

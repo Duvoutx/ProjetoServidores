@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=servidores.db"));
 
-// 🔥 Registra o ServidorRepository para ser injetado nos controllers
+// Registra o ServidorRepository para ser injetado nos controllers
 builder.Services.AddScoped<ServidorRepository>();
 
 // Configuração do CORS
@@ -19,9 +19,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularOrigins", policy =>
     {
         policy.WithOrigins("http://localhost:4200")
-              .AllowAnyMethod()  // Permite qualquer método HTTP
-              .AllowAnyHeader()
-              .AllowCredentials();  // Permite credenciais (se necessário)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
 
@@ -40,11 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-// Ativa o roteamento e autorização
-
 app.UseRouting();
 app.UseAuthorization();
-app.MapControllers(); // 🔥 Isso é essencial para os controllers funcionarem!
+app.MapControllers();
 
 app.Run();

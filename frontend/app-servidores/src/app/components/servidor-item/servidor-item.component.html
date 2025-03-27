@@ -3,6 +3,9 @@
     <div class="servidor-name">{{ servidor.nome }}</div>
     <div class="servidor-orgao">{{ servidor.orgao }}</div>
     <div class="servidor-lotacao">{{ servidor.lotacao }}</div>
+    <div class="servidor-telefone">{{ servidor.telefone }}</div>
+    <div class="servidor-email">{{ servidor.email }}</div>
+    <div class="servidor-sala">Sala {{ servidor.sala }}</div>
     <div class="servidor-ativo">
       <mat-chip [color]="servidor.ativo ? 'accent' : 'warn'" selected>
         {{ servidor.ativo ? 'Ativo' : 'Inativo' }}
@@ -10,20 +13,20 @@
     </div>
   </div>
 
-<div class="servidor-actions">
-  <button *ngIf="servidor.ativo" mat-icon-button (click)="onEditar()" aria-label="Editar" matTooltip="Editar">
-    <mat-icon>edit</mat-icon>
-  </button>
-  <button *ngIf="!isInativo" mat-icon-button color="warn" (click)="onInativar()" aria-label="Inativar"
-    matTooltip="Inativar">
-    <mat-icon>remove_circle_outline</mat-icon>
-  </button>
-  <button *ngIf="isInativo" mat-icon-button (click)="onReativar()" aria-label="Reativar" matTooltip="Reativar">
-    <mat-icon>check_circle_outline</mat-icon>
-  </button>
-  <button *ngIf="isInativo" mat-icon-button color="warn" (click)="onExcluir()" aria-label="Excluir"
-    matTooltip="Excluir">
-    <mat-icon>delete</mat-icon>
-  </button>
-</div>
+  <div class="servidor-actions">
+    <button *ngIf="servidor.ativo" mat-icon-button (click)="onEditar()" aria-label="Editar" matTooltip="Editar">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button *ngIf="!isInativo" mat-icon-button color="warn" (click)="onInativar()" aria-label="Inativar"
+      matTooltip="Inativar">
+      <mat-icon>remove_circle_outline</mat-icon>
+    </button>
+    <button *ngIf="isInativo" mat-icon-button (click)="onReativar()" aria-label="Reativar" matTooltip="Reativar">
+      <mat-icon>check_circle_outline</mat-icon>
+    </button>
+    <button *ngIf="isInativo" mat-icon-button color="warn" (click)="onExcluir()" aria-label="Excluir"
+      matTooltip="Excluir">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </div>

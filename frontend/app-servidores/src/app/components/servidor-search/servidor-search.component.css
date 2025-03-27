@@ -2,7 +2,6 @@
 .search-filters-minimal {
   display: flex;
   align-items: center;
-  /* Alinha os itens verticalmente */
 }
 
 .search-filters-minimal mat-form-field {
@@ -11,33 +10,22 @@
   margin-right: 8px;
 }
 
-/* Reduzir drasticamente o padding interno do wrapper */
 .search-filters-minimal .mat-mdc-text-field-wrapper {
   padding-bottom: 0.2em;
-  /* Tente um valor bem pequeno */
 }
 
-/* Mover o label para mais perto do topo */
 .search-filters-minimal .mat-mdc-floating-label.mat-mdc-floating-label-should-float {
   transform: translateY(-0.9em) scale(0.75);
-  /* Ajuste conforme necessário */
 }
 
-/* Reduzir o padding superior e inferior do input */
 .search-filters-minimal .mat-mdc-input-element {
   padding-top: 0.3em;
-  /* Tente um valor menor */
   padding-bottom: 0.3em;
-  /* Tente um valor menor */
   font-size: 14px;
-  /* Opcional: diminuir a fonte se necessário */
   line-height: 1.2;
-  /* Ajustar a altura da linha para a fonte menor */
 }
 
 .search-filters-minimal button {
   height: 30px;
-  /* Diminuir a altura do botão para corresponder */
   font-size: 12px;
-  /* Opcional: diminuir a fonte do botão */
 }

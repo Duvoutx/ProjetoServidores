@@ -1,4 +1,4 @@
-<mat-toolbar  style="margin-bottom: 20px; background-color: rgb(136, 157, 202);justify-content: center;">
+<mat-toolbar style="margin-bottom: 20px; background-color: rgb(136, 157, 202);justify-content: center;">
   <span style="font-size: 1.8em; font-family: 'cursive', sans-serif; color: rgb(0, 0, 0);">Lista de Servidores</span>
 </mat-toolbar>
 
@@ -15,16 +15,15 @@
       <app-servidor-search [nome]="filtroAtivosNome" [orgao]="filtroAtivosOrgao" [lotacao]="filtroAtivosLotacao"
         (nomeChange)="filtroAtivosNome = $event; filtrarServidoresAtivos()"
         (orgaoChange)="filtroAtivosOrgao = $event; filtrarServidoresAtivos()"
-        (lotacaoChange)="filtroAtivosLotacao = $event; filtrarServidoresAtivos()"
-        (buscar)="filtrarServidoresAtivos()"></app-servidor-search>
+        (lotacaoChange)="filtroAtivosLotacao = $event; filtrarServidoresAtivos()"></app-servidor-search>
       <mat-divider></mat-divider>
       <ul *ngIf="servidoresAtivosFiltrados.length > 0">
-        <li *ngFor="let servidor of servidoresAtivosFiltradosPaginados"> <app-servidor-item [servidor]="servidor"
-            (inativar)="inativar(servidor.id)" (editar)="editar(servidor)"></app-servidor-item>
+        <li *ngFor="let servidor of servidoresAtivosFiltradosPaginados">
+          <app-servidor-item [servidor]="servidor" (inativar)="inativar(servidor.id)"
+            (editar)="editar(servidor)"></app-servidor-item>
         </li>
       </ul>
-      <p *ngIf="servidoresAtivosFiltrados.length === 0">Nenhum
-        servidor ativo encontrado.</p>
+      <p *ngIf="servidoresAtivosFiltrados.length === 0">Nenhum servidor ativo encontrado.</p>
       <mat-paginator #paginatorAtivos [length]="servidoresAtivosFiltrados.length" [pageSize]="pageSizeAtivos"
         [pageSizeOptions]="[5, 10, 25, 100]" (page)="paginarServidoresAtivos($event)"
         aria-label="Selecione a página de servidores ativos">
@@ -32,30 +31,28 @@
     </mat-card>
   </div>
 
-<div>
-  <h2>Servidores Inativos</h2>
-  <mat-card>
-    <app-servidor-search [nome]="filtroInativosNome" [orgao]="filtroInativosOrgao" [lotacao]="filtroInativosLotacao"
-      (nomeChange)="filtroInativosNome = $event; filtrarServidoresInativos()"
-      (orgaoChange)="filtroInativosOrgao = $event; filtrarServidoresInativos()"
-      (lotacaoChange)="filtroInativosLotacao = $event; filtrarServidoresInativos()"
-      (buscar)="filtrarServidoresInativos()"></app-servidor-search>
-    <mat-divider></mat-divider>
-    <ul *ngIf="servidoresInativosFiltrados.length > 0">
-      <li *ngFor="let servidor of servidoresInativosFiltradosPaginados"> <app-servidor-item [servidor]="servidor"
-          (reativar)="reativar(servidor.id)" (excluir)="excluir(servidor.id)"
-          (editar)="editar(servidor)"></app-servidor-item>
-      </li>
-    </ul>
-    <p *ngIf="servidoresInativosFiltrados.length === 0 ">Nenhum servidor inativo encontrado.</p>
-    <mat-paginator #paginatorInativos [length]="servidoresInativosFiltrados.length" [pageSize]="pageSizeInativos"
-      [pageSizeOptions]="[5, 10, 25, 100]" (page)="paginarServidoresInativos($event)"
-      aria-label="Selecione a página de servidores inativos">
-    </mat-paginator>
-  </mat-card>
-</div>
+  <div>
+    <h2>Servidores Inativos</h2>
+    <mat-card>
+      <app-servidor-search [nome]="filtroInativosNome" [orgao]="filtroInativosOrgao" [lotacao]="filtroInativosLotacao"
+        (nomeChange)="filtroInativosNome = $event; filtrarServidoresInativos()"
+        (orgaoChange)="filtroInativosOrgao = $event; filtrarServidoresInativos()"
+        (lotacaoChange)="filtroInativosLotacao = $event; filtrarServidoresInativos()"></app-servidor-search>
+      <mat-divider></mat-divider>
+      <ul *ngIf="servidoresInativosFiltrados.length > 0">
+        <li *ngFor="let servidor of servidoresInativosFiltradosPaginados">
+          <app-servidor-item [servidor]="servidor" (reativar)="reativar(servidor.id)" (excluir)="excluir(servidor.id)"
+            (editar)="editar(servidor)"></app-servidor-item>
+        </li>
+      </ul>
+      <p *ngIf="servidoresInativosFiltrados.length === 0 ">Nenhum servidor inativo encontrado.</p>
+      <mat-paginator #paginatorInativos [length]="servidoresInativosFiltrados.length" [pageSize]="pageSizeInativos"
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="paginarServidoresInativos($event)"
+        aria-label="Selecione a página de servidores inativos">
+      </mat-paginator>
+    </mat-card>
+  </div>
 </div>
 
 <app-servidor-form [modalVisible]="modalVisible" [servidorForm]="servidorForm" [orgaos]="orgaos"
-  (salvar)="salvar($event)" (cancelar)="cancelar()" [formErrors]="formErrors">
-</app-servidor-form>
+  (salvar)="salvar($event)" (cancelar)="cancelar()" [formErrors]="formErrors"></app-servidor-form>

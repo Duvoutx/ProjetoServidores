@@ -5,52 +5,31 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  /* Branco puro ou um tom mais claro */
   padding: 30px;
-  /* Aumentar o padding interno */
   border-radius: 8px;
-  /* Bordas mais arredondadas */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  /* Sombra mais suave */
   z-index: 1000;
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-  /* Transição mais suave */
   min-width: 400px;
-  /* Defina uma largura mínima */
 }
 
 .modal form {
-  display: grid;
-  /* Usando grid para organizar os campos */
-  grid-template-columns: 1fr;
-  /* Uma coluna por padrão */
+  display: flex;
+  flex-direction: column;
   gap: 15px;
-  /* Espaçamento entre os itens do grid */
 }
 
-/* Para telas maiores, podemos usar duas colunas */
-@media (min-width: 768px) {
-  .modal form {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .modal form>div:last-child {
-    /* Evitar que o botão cancelar fique na segunda coluna sozinho */
-    grid-column: span 2;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
 .modal label {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-weight: 500;
-  /* Um pouco mais de destaque para os labels */
   display: block;
-  /* Garante que o label ocupa a largura total */
 }
 
 .modal input[type="text"],
@@ -58,33 +37,26 @@
 .modal select {
   padding: 10px;
   margin-bottom: 0;
-  /* Remove a margem inferior, o espaçamento vem do gap do grid */
   border: 1px solid #ddd;
-  /* Borda mais clara */
   border-radius: 6px;
   font-size: 1rem;
   box-sizing: border-box;
-  /* Garante que o padding não aumenta o tamanho total */
 }
 
 .modal input:focus,
 .modal select:focus {
   outline: none;
   border-color: #007bff;
-  /* Cor primária no foco */
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  /* Efeito de foco sutil */
 }
 
 .modal button {
   padding: 12px 20px;
-  margin-top: 20px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.2s ease-in-out;
-  /* Transição suave para o hover */
 }
 
 .modal button[type="submit"] {
@@ -107,10 +79,17 @@
 }
 
 .error-message {
-  color: #dc3545;
-  /* Vermelho mais padrão para erros */
+  color: red;
+  display: block;
+  font-size: 0.9em;
   margin-top: 5px;
-  font-size: 0.875rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .modal-visible {
