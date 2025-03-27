@@ -3,6 +3,9 @@ using ServidoresAPI.Models;
 using ServidoresAPI.Data;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 [ApiController]
 [Route("servidores")]
@@ -60,6 +63,60 @@ public class ServidorController : ControllerBase
         // Se a validação passar, adicione o servidor
         await _repository.Add(servidor);
         return Ok();
+    }
+
+    // Novo Endpoint para Cadastro em Lote
+    [HttpPost("bulk")]
+    public async Task<IActionResult> AddBulk([FromBody] List<Servidor> servidores)
+    {
+        if (servidores == null || !servidores.Any())
+        {
+            return BadRequest("Nenhum servidor fornecido para criar.");
+        }
+
+        int servidoresCriados = 0;
+        List<string> erros = new List<string>();
+
+        foreach (var servidor in servidores)
+        {
+            // Validação manual para cada servidor
+            if (string.IsNullOrEmpty(servidor.Nome))
+            {
+                erros.Add($"O nome é obrigatório para o servidor com dados: {System.Text.Json.JsonSerializer.Serialize(servidor)}");
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(servidor.Orgao))
+            {
+                erros.Add($"O órgão é obrigatório para o servidor com dados: {System.Text.Json.JsonSerializer.Serialize(servidor)}");
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(servidor.Lotacao))
+            {
+                erros.Add($"A lotação é obrigatória para o servidor com dados: {System.Text.Json.JsonSerializer.Serialize(servidor)}");
+                continue;
+            }
+
+            // Verifica se o email já está em uso
+            bool emailExiste = await _repository.ExisteEmailAsync(servidor.Email);
+            if (emailExiste)
+            {
+                erros.Add($"Já existe um servidor com o email '{servidor.Email}'.");
+                continue;
+            }
+
+            // Se a validação passar, adicione o servidor
+            await _repository.Add(servidor);
+            servidoresCriados++;
+        }
+
+        if (erros.Any())
+        {
+            return BadRequest(new { message = $"{servidoresCriados} servidores criados com sucesso. Os seguintes erros ocorreram:", errors = erros });
+        }
+
+        return Ok(new { message = $"{servidoresCriados} servidores criados com sucesso." });
     }
 
 
@@ -121,9 +178,9 @@ public class ServidorController : ControllerBase
             return NotFound("Servidor não encontrado.");
         }
 
-        servidor.Ativo = false;  // Marca como inativo
+        servidor.Ativo = false;   // Marca como inativo
         await _repository.Update(servidor);
-        return NoContent();  // Status 204 - Inativação bem-sucedida
+        return NoContent();   // Status 204 - Inativação bem-sucedida
     }
 
     [HttpPut("reativar/{id}")]
@@ -162,12 +219,12 @@ public class ServidorController : ControllerBase
         return Ok(servidores);
     }
     // Método GET para buscar órgãos
-    [HttpGet("orgaos")]               
+    [HttpGet("orgaos")]
     public IActionResult GetOrgaos()
     {
         // Lógica para retornar os órgãos
         var orgaos = new List<string> { "Órgão 1", "Órgão 2" };
-        return Ok(orgaos);  // Retorna os órgãos
+        return Ok(orgaos);   // Retorna os órgãos
     }
 
     // Método GET para buscar lotações por órgão
@@ -179,7 +236,7 @@ public class ServidorController : ControllerBase
         {
             "Órgão 1" => new List<string> { "Lotação 1", "Lotação 2" },
             "Órgão 2" => new List<string> { "Lotação 3", "Lotação 4" },
-            _ => new List<string>()  // Caso o órgão não seja encontrado, retorna uma lista vazia
+            _ => new List<string>()    // Caso o órgão não seja encontrado, retorna uma lista vazia
         };
 
         if (lotacoes.Any())
