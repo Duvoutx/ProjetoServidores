@@ -78,6 +78,16 @@ public class ServidorController : ControllerBase
             return NotFound("Servidor não encontrado.");
         }
 
+        // Verificar se o novo e-mail já existe para outro servidor
+        if (existingServidor.Email != servidor.Email) // Só verificar se o e-mail foi alterado
+        {
+            var servidorComMesmoEmail = await _repository.GetByEmail(servidor.Email); // Você precisará criar este método no seu repositório
+            if (servidorComMesmoEmail != null && servidorComMesmoEmail.Id != id) // Certificar que não é o mesmo servidor sendo editado
+            {
+                return BadRequest(new { message = "Já existe um servidor com esse email." });
+            }
+        }
+
         // Atualizando os dados do servidor
         existingServidor.Nome = servidor.Nome;
         existingServidor.Telefone = servidor.Telefone;
@@ -87,7 +97,7 @@ public class ServidorController : ControllerBase
         existingServidor.Sala = servidor.Sala;
 
         await _repository.Update(existingServidor);
-        return NoContent();  // Status 204 - Atualização bem-sucedida
+        return NoContent();
     }
 
     [HttpGet("inativos")]

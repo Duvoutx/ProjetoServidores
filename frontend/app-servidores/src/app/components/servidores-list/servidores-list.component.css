@@ -1,39 +1,52 @@
+/* src/app/components/servidores-list/servidores-list.component.css */
 .servidores-list {
-  padding: 20px;
+  padding: 23px;
+  /* Redução de 30px para ~23px */
 }
 
-.search-filters {
-  margin-bottom: 20px;
+h1 {
+  margin-bottom: 15px;
+  /* Redução de 20px para 15px */
+  font-size: 1.5rem;
+  /* Opcional: Reduzir um pouco o tamanho da fonte do título */
+  color: #333;
 }
 
-.search-filters input {
-  margin-right: 10px;
+button[mat-raised-button][color="primary"] {
+  margin-bottom: 15px;
+  /* Redução de 20px para 15px */
+  padding: 9px 15px;
+  /* Redução de 12px 20px para 9px 15px */
+  font-size: 0.75rem;
+  /* Redução de 1rem para 0.75rem */
 }
 
 .servidores-list-container {
-  display: flex;
-  flex-direction: column;
+  margin-top: 19px;
+  /* Redução de 25px para ~19px */
 }
 
-.servidor-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+h2 {
+  margin-top: 15px;
+  /* Redução de 20px para 15px */
+  margin-bottom: 11px;
+  /* Redução de 15px para ~11px */
+  font-size: 1.125rem;
+  /* Opcional: Reduzir um pouco o tamanho da fonte do subtítulo */
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+  /* Redução de 8px para 6px */
 }
 
-.servidor-info {
-  display: flex;
-  flex-direction: column;
+ul {
+  list-style: none;
+  padding: 0;
 }
 
-.servidor-actions {
-  display: flex;
-  align-items: center;
-}
-
-button {
-  margin-left: 10px;
+p {
+  color: #777;
+  font-size: 0.75rem;
+  /* Opcional: Reduzir um pouco o tamanho da fonte do parágrafo */
+  font-style: italic;
 }

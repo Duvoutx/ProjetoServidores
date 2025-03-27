@@ -1,0 +1,83 @@
+/* src/app/components/servidor-item/servidor-item.component.css */
+.servidor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px;
+  /* Redução de 15px para ~11px */
+  margin-bottom: 8px;
+  /* Mantivemos */
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.servidor-info {
+  flex-grow: 1;
+}
+
+.servidor-name {
+  font-size: 0.83rem;
+  /* Redução de 1.1rem para ~0.83rem */
+  font-weight: 600;
+  margin-bottom: 4px;
+  /* Redução de 5px para 4px */
+}
+
+.servidor-orgao,
+.servidor-lotacao,
+.servidor-ativo {
+  color: #555;
+  font-size: 0.68rem;
+  /* Redução de 0.9rem para ~0.68rem */
+  margin-bottom: 2px;
+  /* Redução de 3px para 2px */
+}
+
+.servidor-ativo {
+  font-weight: bold;
+}
+
+.servidor-actions button {
+  margin-left: 8px;
+  padding: 6px 9px;
+  /* Redução de 8px 12px para 6px 9px */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.68rem;
+  /* Redução de 0.9rem para ~0.68rem */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.servidor-actions button:hover {
+  opacity: 0.9;
+}
+
+.servidor-actions button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.servidor-actions button:first-child:hover {
+  background-color: #0056b3;
+}
+
+.servidor-actions button[color="warn"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.servidor-actions button[color="warn"]:hover {
+  background-color: #c82333;
+}
+
+.servidor-actions button:nth-child(3) {
+  background-color: #28a745;
+  color: white;
+}
+
+.servidor-actions button:nth-child(3):hover {
+  background-color: #1e7e34;
+}

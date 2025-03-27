@@ -1,0 +1,15 @@
+/* src/app/components/servidor-search/servidor-search.component.css */
+.search-filters-minimal {
+  display: flex;
+  gap: 16px; /* Ajuste o espaçamento entre os campos conforme necessário */
+  margin-bottom: 20px; /* Ajuste a margem inferior conforme necessário */
+  align-items: flex-end; /* Alinha verticalmente os itens à parte inferior (útil para o botão) */
+}
+
+.search-filters-minimal mat-form-field {
+  flex-grow: 1; /* Faz os campos de entrada ocuparem o espaço disponível */
+}
+
+.search-filters-minimal button {
+  /* Você pode adicionar estilos específicos para o botão aqui, se desejar */
+}

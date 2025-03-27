@@ -108,6 +108,11 @@ public class ServidorRepository
         await _context.SaveChangesAsync(); 
     }
 
+    public async Task<Servidor> GetByEmail(string email)
+    {
+        return await _context.Servidores.FirstOrDefaultAsync(s => s.Email == email);
+    }
+
     // Inativação
     public async Task Inactivate(int id)
     {
@@ -123,17 +128,17 @@ public class ServidorRepository
         var query = _context.Servidores.AsQueryable();
         if (!string.IsNullOrEmpty(nome))
         {
-            query = query.Where(s => s.Nome.StartsWith(nome));
+            query = query.Where(s => s.Nome.ToLower().StartsWith(nome.ToLower()));
         }
 
         if (!string.IsNullOrEmpty(orgao))
         {
-            query = query.Where(s => s.Orgao.StartsWith(orgao));
+            query = query.Where(s => s.Orgao.ToLower().StartsWith(orgao.ToLower()));
         }
 
         if (!string.IsNullOrEmpty(lotacao))
         {
-            query = query.Where(s => s.Lotacao.StartsWith(lotacao));
+            query = query.Where(s => s.Lotacao.ToLower().StartsWith(lotacao.ToLower()));
         }
 
         return await query.Where(s => s.Ativo).ToListAsync();

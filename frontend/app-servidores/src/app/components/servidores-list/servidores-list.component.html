@@ -1,79 +1,48 @@
-<div class="servidores-list">
-  <h1>Servidores Cadastrados</h1>
+<h1>Lista de Servidores</h1>
 
-  <!-- Filtro de busca -->
-  <div class="search-filters">
-    <input [(ngModel)]="nome" (ngModelChange)="buscar()"  placeholder="Buscar por nome" />
-    <input [(ngModel)]="orgao" (ngModelChange)="buscar()" placeholder="Buscar por órgão" />
-    <input [(ngModel)]="lotacao" (ngModelChange)="buscar()" placeholder="Buscar por lotação" />
-    <button (click)="buscar()">Buscar</button>
-  </div>
+<button mat-raised-button color="primary" (click)="abrirModalCadastro()">
+  <mat-icon>person_add</mat-icon> Adicionar Servidor
+</button>
 
-  <!-- Lista de servidores -->
-  <div class="servidores-list-container">
-    <div class="servidor-item" *ngFor="let servidor of servidores">
-      <div class="servidor-info">
-        <div class="servidor-name">{{ servidor.nome }}</div>
-        <div class="servidor-orgao">{{ servidor.orgao }}</div>
-        <div class="servidor-lotacao">{{ servidor.lotacao }}</div>
-        <div class="servidor-ativo">{{ servidor.ativo ? 'Ativo' : 'Inativo' }}</div>
-      </div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <app-servidor-search (nomeChange)="onNomeChange($event)" (orgaoChange)="onOrgaoChange($event)"
+    (lotacaoChange)="onLotacaoChange($event)" (buscar)="buscar()">
+  </app-servidor-search>
 
-      <div class="servidor-actions">
-        <button mat-button (click)="editar(servidor)">Editar</button>
-        <button mat-button color="warn" (click)="inativar(servidor.id)">Inativar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal de Cadastro/Atualização -->
-  <div class="modal">
-    <form (ngSubmit)="salvar()">
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" [(ngModel)]="servidorForm.nome" name="nome" required />
-
-      <label for="telefone">Telefone</label>
-      <input type="text" id="telefone" [(ngModel)]="servidorForm.telefone" name="telefone" />
-
-      <label for="email">E-mail</label>
-      <input type="email" id="email" [(ngModel)]="servidorForm.email" name="email" />
-
-      <label for="orgao">Órgão</label>
-      <select id="orgao" [(ngModel)]="servidorForm.orgao" name="orgao" (change)="onOrgaoChange()" required>
-        <option value="">Selecione o Órgão</option>
-        <option *ngFor="let orgao of orgaos" [value]="orgao">{{ orgao }}</option>
-      </select>
-
-      <label for="lotacao">Lotação</label>
-      <select id="lotacao" [(ngModel)]="servidorForm.lotacao" name="lotacao" required>
-        <option value="">Selecione a Lotação</option>
-        <option *ngFor="let lotacao of lotacoesFiltradas" [value]="lotacao">{{ lotacao }}</option>
-      </select>
-
-      <label for="sala">Sala</label>
-      <input type="text" id="sala" [(ngModel)]="servidorForm.sala" name="sala" />
-
-      <button type="submit">Salvar</button>
-      <button type="button" (click)="cancelar()">Cancelar</button>
-    </form>
-  </div>
-  <br>
-  <br>
-  <br>
-  Inativos
-  <div class="servidores-list-container">
-    <div class="servidor-item" *ngFor="let servidor of servidoresInativos">
-      <div class="servidor-info">
-        <div class="servidor-name">{{ servidor.nome }}</div>
-        <div class="servidor-orgao">{{ servidor.orgao }}</div>
-        <div class="servidor-lotacao">{{ servidor.lotacao }}</div>
-        <div class="servidor-ativo">{{ servidor.ativo ? 'Ativo' : 'Inativo' }}</div>
-      </div>
-
-      <div class="servidor-actions">
-        <button mat-button (click)="reativar(servidor.id)">Reativar</button>
-        <button mat-button color="warn" (click)="excluir(servidor.id)">Excluir</button>
-      </div>
-    </div>
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar por Status</mat-label>
+    <mat-select [(ngModel)]="filtroStatus" (ngModelChange)="filtrarServidores()">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="ativo">Ativos</mat-option>
+      <mat-option value="inativo">Inativos</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
+
+<div *ngIf="filtroStatus === '' || filtroStatus === 'ativo'">
+  <h2>Servidores Ativos</h2>
+  <ul *ngIf="servidores.length > 0">
+    <li *ngFor="let servidor of servidores">
+      <app-servidor-item [servidor]="servidor" (inativar)="inativar(servidor.id)"
+        (editar)="editar(servidor)"></app-servidor-item>
+    </li>
+  </ul>
+  <p *ngIf="servidores.length === 0 && (filtroStatus === '' || filtroStatus === 'ativo')">Nenhum servidor ativo
+    encontrado.</p>
+</div>
+
+<div *ngIf="filtroStatus === '' || filtroStatus === 'inativo'">
+  <h2>Servidores Inativos</h2>
+  <ul *ngIf="servidoresInativos.length > 0">
+    <li *ngFor="let servidor of servidoresInativos">
+      <app-servidor-item [servidor]="servidor" (reativar)="reativar(servidor.id)" (excluir)="excluir(servidor.id)"
+        (editar)="editar(servidor)"></app-servidor-item>
+    </li>
+  </ul>
+  <p *ngIf="servidoresInativos.length === 0 && filtroStatus === 'inativo'">Nenhum servidor inativo encontrado.</p>
+  <p *ngIf="servidoresInativos.length === 0 && filtroStatus === ''">Nenhum servidor inativo encontrado.</p>
+</div>
+
+<app-servidor-form [modalVisible]="modalVisible" [servidorForm]="servidorForm" [orgaos]="orgaos"
+  (salvar)="salvar($event)" (cancelar)="cancelar()" [formErrors]="formErrors">
+</app-servidor-form>
